@@ -1,0 +1,89 @@
+openapi: "3.0.0"
+info:
+  title: OpWeave API Specifications
+  description: This is a API design for OpWeave Project based on Open API Specification 3.0
+  contact:
+    name: A B M Zubayer
+    email: zubayerjs.dev@gmail.com
+    url: zubayer.vercel.com
+  version: 1.0.0
+  license:
+    name: MIT
+    
+paths:
+  /api/v1/auth/signin:
+    post:
+      summary: Sign In to Account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+                type: object
+                properties:
+                  username:
+                    $ref: "#/components/schemas/USERNAME"
+                  password:
+                    $ref: "#/components/schemas/PASSWORD"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    fullname:
+                      $ref: "#/components/schemas/FULLNAME"
+                    username:
+                      $ref: "#/components/schemas/USERNAME"
+                    email:
+                      $ref: "#/components/schemas/EMAIL"
+                    gender:
+                      $ref: "#/components/schemas/GENDER"
+                    avatar:
+                      type: string
+                      format: Img URL
+                      example: https://randomimg.com/123
+                    createdAt:
+                      $ref: "#/components/schemas/CREATED_AT"
+
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Incorrect login credentials!
+
+components:
+  schemas:
+    FULLNAME:
+      type: string
+      minLength: 4
+      example: A B M Zubayer
+    USERNAME:
+      type: string
+      minLength: 4
+      uniqueItems: true
+      example: zubayerjs.devp
+    PASSWORD:
+      type: string
+      minLength: 8
+    EMAIL:
+      type: string
+      uniqueItems: true
+      example: zubayerjs.dev@gmail.com
+    GENDER:
+      type: string
+      enum:
+        - MALE
+        - FEMALE
+      example: MALE
+    CREATED_AT:
+      type: string
+      format: Date
+      example: 2024-03-24 16:49:02.576
